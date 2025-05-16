@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
@@ -20,7 +20,7 @@ jobs:
           git diff origin/${{ github.base_ref }}...HEAD > pr-diff.txt
 
       - name: Upload diff as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pr-diff
           path: pr-diff.txt
