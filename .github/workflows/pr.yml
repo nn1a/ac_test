@@ -1,0 +1,26 @@
+name: PR Diff Artifact
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  diff-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Get PR diff
+        id: diff
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          git diff origin/${{ github.base_ref }}...HEAD > pr-diff.txt
+
+      - name: Upload diff as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pr-diff
+          path: pr-diff.txt
